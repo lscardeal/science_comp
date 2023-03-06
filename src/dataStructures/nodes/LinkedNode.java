@@ -20,4 +20,8 @@ public class LinkedNode<T> {
 		public void setNext(LinkedNode<T> next) {
 			this.next = next;
 		}
+		
+		public boolean hasNext() {
+			return this.next != null;
+		}
 	}

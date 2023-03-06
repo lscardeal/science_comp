@@ -1,7 +1,11 @@
 package dataStructures.lists;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import dataStructures.nodes.LinkedNode;
-public class LinkedList<T> {
+
+public class LinkedList<T> implements Iterable<T> {
 
 	private LinkedNode<T> head;
 
@@ -26,7 +30,7 @@ public class LinkedList<T> {
 	public boolean isEmpty() {
 		return this.size == 0;
 	}
-	
+
 	private boolean hasOneNode() {
 		return this.size == 1;
 	}
@@ -53,7 +57,7 @@ public class LinkedList<T> {
 
 	public T get(int index) throws IndexOutOfBoundsException {
 		this.checkIndex(index);
-		
+
 		if (index == 0) {
 			return getFirst();
 		} else if (index == this.size - 1) {
@@ -67,11 +71,11 @@ public class LinkedList<T> {
 
 		return current.getValue();
 	}
-	
+
 	public T getFirst() {
 		return this.head.getValue();
 	}
-	
+
 	public T getLast() {
 		return this.tail.getValue();
 	}
@@ -117,12 +121,12 @@ public class LinkedList<T> {
 			this.initialize();
 			return;
 		}
-		
+
 		LinkedNode<T> current = head;
-		while (current.getNext().getNext() != null) {
+		while (current.getNext().hasNext()) {
 			current = current.getNext();
 		}
-		
+
 		current.setNext(null);
 		size--;
 	}
@@ -135,24 +139,24 @@ public class LinkedList<T> {
 			this.removeLast();
 			return;
 		}
-		
+
 		if (this.isEmpty()) {
 			return;
 		} else if (this.hasOneNode()) {
 			this.initialize();
 			return;
 		}
-		
+
 		this.checkIndex(index - 1);
 		LinkedNode<T> current = this.head;
 		for (int i = 0; i < index - 1; i++) {
 			current = current.getNext();
 		}
-		
+
 		current.setNext(current.getNext().getNext());
 		size--;
 	}
-	
+
 	public int indexOf(T value) {
 		LinkedNode<T> current = this.head;
 		for (int i = 0; i < size; i++) {
@@ -167,7 +171,7 @@ public class LinkedList<T> {
 	public boolean contains(T value) {
 		return this.indexOf(value) != -1;
 	}
-	
+
 	public void remove(T value) {
 		int index = this.indexOf(value);
 		this.remove(index);
@@ -180,6 +184,35 @@ public class LinkedList<T> {
 	private void checkIndex(int index) throws IndexOutOfBoundsException {
 		if (index < 0 || index >= size) {
 			throw new IndexOutOfBoundsException(index);
+		}
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		return new LinkedListIterator();
+	}
+
+	private class LinkedListIterator implements Iterator<T> {
+
+		private LinkedNode<T> current;
+
+		private LinkedListIterator() {
+			current = head;
+		}
+
+		@Override
+		public boolean hasNext() {
+			return current != null;
+		}
+
+		@Override
+		public T next() {
+			if (!hasNext()) {
+				throw new NoSuchElementException();
+			}
+			T value = current.getValue();
+			current = current.getNext();
+			return value;
 		}
 	}
 

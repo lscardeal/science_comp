@@ -1,8 +1,10 @@
 package dataStructures.lists;
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-public class ArrayList<T> {
+public class ArrayList<T> implements Iterable<T> {
 
 	private T[] elements;
 
@@ -39,10 +41,27 @@ public class ArrayList<T> {
 		elements[--this.size] = null;
 	}
 	
+	public void remove(T value) {
+		int index = this.indexOf(value);
+		if (index >= 0) {
+			this.remove(index);
+		}
+	}
+	
+	public int indexOf(T value) {
+		for (int i = 0; i < this.size - 1; i++) {
+			if (this.elements.equals(value)) {
+				return i;
+			}
+		}
+		
+		return -1;
+	}
+
 	public void removeFirst() {
 		this.remove(0);
 	}
-	
+
 	public void removeLast() {
 		this.remove(this.size - 1);
 	}
@@ -51,19 +70,19 @@ public class ArrayList<T> {
 		this.checkIndex(index);
 		return this.elements[index];
 	}
-	
+
 	public T getFirst() {
 		this.checkIndex(0);
 		return this.elements[0];
 	}
-	
+
 	public T getLast() {
 		int index = this.size - 1;
 		this.checkIndex(index);
 		return this.elements[index];
 	}
 
-	public int size() {
+	public int getSize() {
 		return this.size;
 	}
 
@@ -78,10 +97,10 @@ public class ArrayList<T> {
 	private boolean isFull() {
 		return this.size == this.elements.length;
 	}
-	
+
 	private boolean isQuarterEmpty() {
-    	return this.size == this.elements.length / 4;
-    }
+		return this.size == this.elements.length / 4;
+	}
 
 	private void resize() {
 		this.elements = Arrays.copyOf(this.elements, this.elements.length * 2);
@@ -95,6 +114,33 @@ public class ArrayList<T> {
 	private void checkIndex(int index) throws IndexOutOfBoundsException {
 		if (index < 0 || index >= this.size) {
 			throw new IndexOutOfBoundsException(index);
+		}
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		return new ArrayListIterator();
+	}
+
+	private class ArrayListIterator implements Iterator<T> {
+
+		private int index;
+
+		private ArrayListIterator() {
+			index = 0;
+		}
+
+		@Override
+		public boolean hasNext() {
+			return index < size;
+		}
+
+		@Override
+		public T next() {
+			if (!hasNext()) {
+				throw new NoSuchElementException();
+			}
+			return elements[index++];
 		}
 	}
 }
