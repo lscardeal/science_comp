@@ -1,12 +1,13 @@
-package dataStructures.stacks;
+package dataStructures.queues;
 
 import dataStructures.lists.LinkedList;
 
-public class Stack<T> {
+public class Queue<T> {
 	
     private LinkedList<T> elements;
+    
 
-    public Stack() {
+    public Queue() {
         this.initialize();
     }   
     
@@ -14,18 +15,18 @@ public class Stack<T> {
     	this.elements = new LinkedList<>();
     }
     
-    public void push(T element) {
+    public void enqueue(T element) {
         this.elements.addLast(element);
     }
 
-    public T pop() {
-    	T element = this.elements.getLast();
-        this.elements.removeLast();
+    public T dequeue() {
+    	T element = this.elements.getFirst();
+        this.elements.removeFirst();
         return element;
     }
 
     public T peek() {
-        return this.elements.getLast();
+        return this.elements.getFirst();
     }
 
     public boolean isEmpty() {
