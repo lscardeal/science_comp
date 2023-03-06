@@ -1,6 +1,6 @@
-package dataStructure.lists;
+package dataStructures.lists;
 
-import dataStructure.nodes.LinkedNode;
+import dataStructures.nodes.LinkedNode;
 public class LinkedList<T> {
 
 	private LinkedNode<T> head;

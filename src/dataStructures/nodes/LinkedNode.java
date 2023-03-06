@@ -1,4 +1,4 @@
-package dataStructure.nodes;
+package dataStructures.nodes;
 
 public class LinkedNode<T> {
 
