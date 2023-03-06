@@ -38,8 +38,27 @@ public class ArrayList<T> {
 
 		elements[--this.size] = null;
 	}
+	
+	public void removeFirst() {
+		this.remove(0);
+	}
+	
+	public void removeLast() {
+		this.remove(this.size - 1);
+	}
 
 	public T get(int index) {
+		this.checkIndex(index);
+		return this.elements[index];
+	}
+	
+	public T getFirst() {
+		this.checkIndex(0);
+		return this.elements[0];
+	}
+	
+	public T getLast() {
+		int index = this.size - 1;
 		this.checkIndex(index);
 		return this.elements[index];
 	}
