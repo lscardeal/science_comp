@@ -16,7 +16,7 @@ public class BinaryNode<T extends Comparable<T>> {
 		return this.value;
 	}
 	
-	public BinaryNode getLeft() {
+	public BinaryNode<T> getLeft() {
 		return this.left;
 	}
 	

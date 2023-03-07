@@ -2,7 +2,7 @@ package dataStructures.trees;
 
 import dataStructures.nodes.BinaryNode;
 
-public class BinaryTree<T extends Comparable<T>> {
+public class SearchBinaryTree<T extends Comparable<T>> {
 
 	private BinaryNode<T> root;
 	
