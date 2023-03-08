@@ -43,7 +43,11 @@ public class LinkedList<T> implements Iterable<T> {
 		LinkedNode<T> node = createNode(value);
 		node.setNext(this.head);
 		this.head = node;
-		this.tail = node;
+
+		if (this.isEmpty()) {
+			this.tail = node;
+		}
+
 		this.size++;
 	}
 
@@ -77,11 +81,11 @@ public class LinkedList<T> implements Iterable<T> {
 	}
 
 	public T getFirst() {
-		return this.head.getValue();
+		return this.head == null ? null : this.head.getValue();
 	}
 
 	public T getLast() {
-		return this.tail.getValue();
+		return this.tail == null ? null : this.tail.getValue();
 	}
 
 	public void add(int index, T value) throws IndexOutOfBoundsException {
