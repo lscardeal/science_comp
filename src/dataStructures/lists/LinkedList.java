@@ -23,6 +23,10 @@ public class LinkedList<T> implements Iterable<T> {
 		this.size = 0;
 	}
 
+	public void clear() {
+		this.initialize();
+	}
+
 	public int getSize() {
 		return this.size;
 	}
