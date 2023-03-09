@@ -195,6 +195,24 @@ public class LinkedList<T> implements Iterable<T> {
 		}
 	}
 
+	public LinkedList<T> clone() {
+		LinkedList<T> clone = new LinkedList<T>();
+
+        if (this.isEmpty()) {
+            return clone;
+        }
+
+        LinkedNode<T> current = this.head;
+        clone.addFirst(current.getValue());
+
+        while (current.hasNext()) {
+            current = current.getNext();
+            clone.addLast(current.getValue());
+        }
+
+        return clone;
+	}
+
 	@Override
 	public Iterator<T> iterator() {
 		return new LinkedListIterator();

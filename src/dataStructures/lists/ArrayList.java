@@ -26,9 +26,9 @@ public class ArrayList<T> implements Iterable<T> {
 		this.size = 0;
 	}
 
-	public void add(T element) {
+	public void add(T value) {
 		this.resizeIfNeeded();
-		this.elements[this.size++] = element;
+		this.elements[this.size++] = value;
 	}
 
 	public void remove(int index) throws IndexOutOfBoundsException {
@@ -91,7 +91,7 @@ public class ArrayList<T> implements Iterable<T> {
 	}
 
 	public ArrayList<T> clone() {
-		return new ArrayList<T>(this.elements, this.size);
+		return new ArrayList<T>(this.elements.clone(), this.size);
 	}
 
 	private boolean isFull() {
@@ -115,6 +115,10 @@ public class ArrayList<T> implements Iterable<T> {
 		if (index < 0 || index >= this.size) {
 			throw new IndexOutOfBoundsException(index);
 		}
+	}
+
+	public boolean isEmpty() {
+		return this.size == 0;
 	}
 
 	@Override
