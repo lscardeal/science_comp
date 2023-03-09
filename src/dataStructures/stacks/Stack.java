@@ -7,11 +7,7 @@ public class Stack<T> {
     private LinkedList<T> elements;
 
     public Stack() {
-        this.initialize();
-    }   
-    
-    private void initialize() {
-    	this.elements = new LinkedList<>();
+        this.elements = new LinkedList<>();
     }
     
     public void push(T element) {
@@ -22,6 +18,10 @@ public class Stack<T> {
     	T element = this.elements.getLast();
         this.elements.removeLast();
         return element;
+    }
+
+    public void clear() {
+        this.elements.clear();
     }
 
     public T peek() {

@@ -8,11 +8,7 @@ public class Queue<T> {
     
 
     public Queue() {
-        this.initialize();
-    }   
-    
-    private void initialize() {
-    	this.elements = new LinkedList<>();
+        this.elements = new LinkedList<>();
     }
     
     public void enqueue(T element) {
@@ -35,5 +31,9 @@ public class Queue<T> {
 
     public int size() {
         return this.elements.getSize();
+    }
+
+    public void clear() {
+        this.elements.clear();
     }
 }

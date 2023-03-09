@@ -31,4 +31,12 @@ public class BinaryNode<T extends Comparable<T>> {
 	public void setRight(BinaryNode<T> node) {
 		this.right = node;
 	}
+
+	public boolean isFull() {
+		return left != null && right != null;
+	}
+
+	public boolean isEmpty() {
+		return left == null && right == null;
+	}
 }

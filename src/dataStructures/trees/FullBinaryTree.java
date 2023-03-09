@@ -7,21 +7,21 @@ public class FullBinaryTree<T extends Comparable<T>> {
     private BinaryNode<T> root;
     
     public FullBinaryTree(T value) {
+        if (value == null) {
+            throw new IllegalArgumentException("Value can't be null");
+        }
+
         root = new BinaryNode<T>(value);
     }
     
     public FullBinaryTree(T value, FullBinaryTree<T> left, FullBinaryTree<T> right) {
+        if (value == null && left != null && right != null) {
+            throw new IllegalArgumentException("Value can't be null");
+        }
+
         root = new BinaryNode<T>(value);
         root.setLeft(left.root);
         root.setRight(right.root);
-    }
-    
-    public BinaryNode<T> getRoot() {
-        return root;
-    }
-    
-    public boolean isEmpty() {
-        return root == null;
     }
     
     private boolean isLeaf(BinaryNode<T> node) {
@@ -29,7 +29,7 @@ public class FullBinaryTree<T extends Comparable<T>> {
     }
     
     public boolean isFull() {
-        if (isEmpty()) {
+        if (root.isEmpty()) {
             return true;
         }
         return isFullHandler(root);
