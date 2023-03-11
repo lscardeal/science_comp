@@ -5,55 +5,72 @@ import dataStructures.nodes.BinaryNode;
 public class SearchBinaryTree<T extends Comparable<T>> {
 
 	private BinaryNode<T> root;
+
+	private short insertions;
+
+	private static final short INSERTIONS_TO_BALANCE = 10;
+
+	public SearchBinaryTree(T value) {
+		BinaryNode<T> node = new BinaryNode<T>(value);
+		this.root = node;
+		this.insertions = 0;
+	}
 	
 	public void insert(T value) {
 		BinaryNode<T> node = new BinaryNode<T>(value);
-		
-        if (root == null) {
-        	insertRoot(node);
-        } else {
-        	insertLeaf(root, node);
-        }
+		insertHandler(root, node);
+		if (insertions == INSERTIONS_TO_BALANCE) {
+			balance();
+			insertions = 0;
+		}
     }
 
-	private BinaryNode<T> insertLeaf(BinaryNode<T> current, BinaryNode<T> node) {
-		if (current == null) {
-	        return node;
-	    }
-		
+	private void insertHandler(BinaryNode<T> current, BinaryNode<T> node) {
 		int comparison = node.getValue().compareTo(current.getValue());
 		
 		if (comparison < 0) {
-            current.setLeft(insertLeaf(current.getLeft(), node));
+			if (!current.hasLeft()) {
+				current.setLeft(node);
+				insertions++;
+			} else {
+				insertHandler(current.getLeft(), node);
+			}
         } else if (comparison > 0) {
-        	current.setRight(insertLeaf(current.getRight(), node));
+			if (!current.hasRight()) {
+				current.setRight(node);
+				insertions++;
+			} else {
+				insertHandler(current.getRight(), node);
+			}
         }
-		
-		return current;
-	}
-
-	private void insertRoot(BinaryNode<T> node) {
-		root = node;
 	}
 	
 	private void rotateLeft(BinaryNode<T> node) {
 	    BinaryNode<T> pivot = node.getRight();
-	    node.setRight(pivot.getLeft());
-	    pivot.setLeft(node);
-	    if (node == root) {
-	        root = pivot;
-	    }
+		if (pivot != null) {
+			node.setRight(pivot.getLeft());
+			pivot.setLeft(node);
+			if (node == root) {
+				root = pivot;
+			}
+		}
 	}
 
 	private void rotateRight(BinaryNode<T> node) {
 	    BinaryNode<T> pivot = node.getLeft();
-	    node.setLeft(pivot.getRight());
-	    pivot.setRight(node);
-	    if (node == root) {
-	        root = pivot;
-	    }
+		if (pivot != null) {
+			node.setLeft(pivot.getRight());
+			pivot.setRight(node);
+			if (node == root) {
+				root = pivot;
+			}
+		}
 	}
 	
+	public int height() {
+		return height(this.root);
+	}
+
 	private int height(BinaryNode<T> node) {
 	    if (node == null) {
 	        return -1;
