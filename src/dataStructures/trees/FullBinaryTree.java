@@ -32,10 +32,10 @@ public class FullBinaryTree<T extends Comparable<T>> {
         if (root.isEmpty()) {
             return true;
         }
-        return isFullHandler(root);
+        return isFullHelper(root);
     }
     
-    private boolean isFullHandler(BinaryNode<T> node) {
+    private boolean isFullHelper(BinaryNode<T> node) {
         if (node == null) {
             return true;
         }
@@ -44,41 +44,34 @@ public class FullBinaryTree<T extends Comparable<T>> {
         }
 
         if (node.getLeft() != null && node.getRight() != null) {
-            return isFullHandler(node.getLeft()) && isFullHandler(node.getRight());
+            return isFullHelper(node.getLeft()) && isFullHelper(node.getRight());
         }
 
         return false;
     }
     
     public int height() {
-        return heightHandler(root);
+        return heightHelper(root);
     }
 
-    private int heightHandler(BinaryNode<T> node) {
+    private int heightHelper(BinaryNode<T> node) {
         if (node == null) {
             return -1;
         }
-        int leftHeight = heightHandler(node.getLeft());
-        int rightHeight = heightHandler(node.getRight());
+        int leftHeight = heightHelper(node.getLeft());
+        int rightHeight = heightHelper(node.getRight());
         return 1 + Math.max(leftHeight, rightHeight);
     }
     
     private BinaryNode<T> getLowestLeaf(BinaryNode<T> node) {
-    	if (node.getLeft() == null) {
-    		return node;
-    	}
+    	if (!node.isFull()) return node;
     	
-    	int leftHeight = heightHandler(node.getLeft());
-    	int rightHeight = heightHandler(node.getRight());
+    	int leftHeight = heightHelper(node.getLeft());
+    	int rightHeight = heightHelper(node.getRight());
     	
-    	BinaryNode<T> resultNode;
-    	if (leftHeight > rightHeight) {
-    		resultNode = getLowestLeaf(node.getRight());
-    	} else {
-    		resultNode = getLowestLeaf(node.getLeft());
-    	}
-    	
-    	return resultNode;
+    	return leftHeight > rightHeight ?
+            getLowestLeaf(node.getRight()) :
+            getLowestLeaf(node.getRight());
     }
     
     public void add(T leftValue, T rightValue) {

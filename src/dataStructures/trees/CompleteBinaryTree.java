@@ -32,29 +32,22 @@ public class CompleteBinaryTree<T extends Comparable<T>> {
     }
 
     private BinaryNode<T> getLowestLeaf(BinaryNode<T> node) {
-    	if (!node.isFull()) {
-    		return node;
-    	}
+    	if (!node.isFull()) return node;
     	
-    	int leftHeight = heightHandler(node.getLeft());
-    	int rightHeight = heightHandler(node.getRight());
+    	int leftHeight = heightHelper(node.getLeft());
+    	int rightHeight = heightHelper(node.getRight());
     	
-    	BinaryNode<T> resultNode;
-    	if (leftHeight > rightHeight) {
-    		resultNode = getLowestLeaf(node.getRight());
-    	} else {
-    		resultNode = getLowestLeaf(node.getLeft());
-    	}
-    	
-    	return resultNode;
+    	return leftHeight > rightHeight ?
+            getLowestLeaf(node.getRight()) :
+            getLowestLeaf(node.getRight());
     }
 
-    private int heightHandler(BinaryNode<T> node) {
+    private int heightHelper(BinaryNode<T> node) {
         if (node == null) {
             return -1;
         }
-        int leftHeight = heightHandler(node.getLeft());
-        int rightHeight = heightHandler(node.getRight());
+        int leftHeight = heightHelper(node.getLeft());
+        int rightHeight = heightHelper(node.getRight());
         return 1 + Math.min(leftHeight, rightHeight);
     }
 }

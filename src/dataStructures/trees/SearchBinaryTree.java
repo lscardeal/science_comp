@@ -18,14 +18,14 @@ public class SearchBinaryTree<T extends Comparable<T>> {
 	
 	public void insert(T value) {
 		BinaryNode<T> node = new BinaryNode<T>(value);
-		insertHandler(root, node);
+		insertHelper(root, node);
 		if (insertions == INSERTIONS_TO_BALANCE) {
 			balance();
 			insertions = 0;
 		}
     }
 
-	private void insertHandler(BinaryNode<T> current, BinaryNode<T> node) {
+	private void insertHelper(BinaryNode<T> current, BinaryNode<T> node) {
 		int comparison = node.getValue().compareTo(current.getValue());
 		
 		if (comparison < 0) {
@@ -33,14 +33,14 @@ public class SearchBinaryTree<T extends Comparable<T>> {
 				current.setLeft(node);
 				insertions++;
 			} else {
-				insertHandler(current.getLeft(), node);
+				insertHelper(current.getLeft(), node);
 			}
         } else if (comparison > 0) {
 			if (!current.hasRight()) {
 				current.setRight(node);
 				insertions++;
 			} else {
-				insertHandler(current.getRight(), node);
+				insertHelper(current.getRight(), node);
 			}
         }
 	}
@@ -79,16 +79,16 @@ public class SearchBinaryTree<T extends Comparable<T>> {
 	}
 	
 	private void balance() {
-	    root = balanceHandler(root);
+	    root = balanceHelper(root);
 	}
 
-	private BinaryNode<T> balanceHandler(BinaryNode<T> node) {
+	private BinaryNode<T> balanceHelper(BinaryNode<T> node) {
 		if (node == null) {
 			return null;
 		}
 
-		node.setLeft(balanceHandler(node.getLeft()));
-		node.setRight(balanceHandler(node.getRight()));
+		node.setLeft(balanceHelper(node.getLeft()));
+		node.setRight(balanceHelper(node.getRight()));
 
 		int leftHeight = height(node.getLeft());
 		int rightHeight = height(node.getRight());
