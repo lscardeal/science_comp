@@ -35,4 +35,10 @@ public class Stack<T> {
     public int size() {
         return this.elements.getSize();
     }
+
+    public void print() {
+        if (!elements.isEmpty()) {
+            elements.print();
+        }
+    }
 }

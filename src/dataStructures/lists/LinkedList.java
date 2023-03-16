@@ -17,6 +17,19 @@ public class LinkedList<T> implements Iterable<T> {
 		this.initialize();
 	}
 
+	public void print() {
+		printHelper(head);
+		System.out.println(" //");
+	}
+
+	private void printHelper(LinkedNode<T> node) {
+		System.out.print(node.getValue());
+		if (node.hasNext()) {
+			System.out.print(" | ");
+			printHelper(node.getNext());
+		}
+	}
+
 	private void initialize() {
 		this.head = null;
 		this.tail = null;
@@ -56,10 +69,11 @@ public class LinkedList<T> implements Iterable<T> {
 
 		if (this.isEmpty()) {
 			this.head = node;
+			this.tail = node;
+		} else {
+			this.tail.setNext(node);
+			this.tail = node;
 		}
-
-		node.setNext(this.tail);
-		this.tail = node;
 		this.size++;
 	}
 
@@ -136,6 +150,7 @@ public class LinkedList<T> implements Iterable<T> {
 		}
 
 		current.setNext(null);
+		this.tail = current;
 		size--;
 	}
 

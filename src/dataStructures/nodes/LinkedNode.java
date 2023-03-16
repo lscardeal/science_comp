@@ -7,6 +7,7 @@ public class LinkedNode<T> {
 
 		public LinkedNode(T value) {
 			this.value = value;
+			this.next = null;
 		}
 
 		public T getValue() {
